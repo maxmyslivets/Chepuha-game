@@ -32,6 +32,12 @@ Builder.load_string("""
 
     n_players: n_players
 
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'AppBackground_2.jpg'
+
     BoxLayout:
         orientation: 'vertical'
 
@@ -48,7 +54,7 @@ Builder.load_string("""
                 text_size: self.size
                 halign: 'center'
                 valign: 'middle'
-                text: 'Chepuha'
+                text: 'Чепуха'
             
         BoxLayout:
             orientation: 'vertical'
@@ -75,7 +81,7 @@ Builder.load_string("""
                 size_hint_y: .2
             
             MDFillRoundFlatButton:
-                text: 'Start'
+                text: 'Старт'
                 size_hint: .9, .1
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 on_release: root.first_game_screen(n_players.text)
@@ -86,9 +92,16 @@ Builder.load_string("""
 
 
 <NextGameScreen>:
+
     quests_data: quests_data
     answers_data: answers_data
     quests_label: quests_label
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'AppBackground_2.jpg'
 
     BoxLayout:
         orientation: 'vertical'
@@ -103,7 +116,7 @@ Builder.load_string("""
                     MDFillRoundFlatButton:
                         pos_hint: {'center_x': .5, 'center_y': .5}
                         size_hint_x: .8
-                        text: 'New Game'
+                        text: 'Новая игра'
 
                         on_release: app.clear_var()
                         on_release: root.manager.current = 'Home'
@@ -128,7 +141,7 @@ Builder.load_string("""
 
             TextInput:
                 id: answers_data
-                hint_text: 'Enter answer'
+                hint_text: 'Введите ответ'
 
         BoxLayout:
             orientation: 'vertical'
@@ -136,13 +149,13 @@ Builder.load_string("""
 
             TextInput:
                 id: quests_data
-                hint_text: 'Enter quest'
+                hint_text: 'Введите вопрос'
         
         FloatLayout:
             MDFillRoundFlatButton:
                 pos_hint: {'center_x': .5, 'top': .9}
                 # icon: 'skip-next'
-                text: 'Next player'
+                text: 'Передать ход'
                 size_hint_y: .3
                 on_release: root.add_data(answers_data.text, quests_data.text, quests_label.text)
         
@@ -150,7 +163,7 @@ Builder.load_string("""
             MDFillRoundFlatButton:
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 size_hint_x: .8
-                text: 'The end!'
+                text: 'Закончить'
                 size_hint_y: .3
                 on_release: root.end()
                 on_release: root.manager.current = 'TheEndScreen'
@@ -158,10 +171,27 @@ Builder.load_string("""
             
 
 <TheEndScreen>:
+
     end_label: end_label
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'AppBackground_2.jpg'
 
     BoxLayout:
         orientation: 'vertical'
+
+        FloatLayout:
+            size_hint_y: .1
+
+            MDIconButton:
+                pos_hint: {'right': 1, 'top': 1}
+                valign: 'middle'
+                icon: 'close'
+
+                on_release: app.stop()
 
         BoxLayout:
             padding: 20,20,20,20
@@ -175,21 +205,15 @@ Builder.load_string("""
             FloatLayout:
                 MDFillRoundFlatButton:
                     pos_hint: {'center_x': .5, 'center_y': .5}
-                    text: 'Click for update answers...'
+                    text: 'Показать историю'
                     on_release: root.update_answers()
             
             FloatLayout:
                 MDFillRoundFlatButton:
                     pos_hint: {'center_x': .5, 'center_y': .5}
-                    text: 'New Game!'
+                    text: 'Сыграть ещё раз'
                     on_release: app.clear_var()
                     on_release: root.manager.current = 'Home'
-                
-            FloatLayout:
-                MDFillRoundFlatButton:
-                    pos_hint: {'center_x': .5, 'center_y': .5}
-                    text: 'Exit'
-                    on_release: app.stop()
 
 """)
 
