@@ -1,0 +1,99 @@
+<MyTextInput@MDTextFieldRound>
+
+    normal_color: color_shadow
+    active_color: color_shadow
+
+
+<NextGameScreen>:
+
+    quests_data: quests_data
+    answers_data: answers_data
+    quests_label: quests_label
+    volume_btn: volume_btn
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'media/AppBackground_2.jpg'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        canvas.before:
+            Color:
+                rgba: 0,0,0,.2
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        AnchorLayout:
+            size_hint_y: .5
+
+            BoxLayout:
+
+                FloatLayout:
+
+                    MDFillRoundFlatButton:
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        size_hint_x: .8
+                        text: 'Новая игра'
+
+                        on_release: app.clear_var()
+                        on_release: root.manager.current = 'Home'
+
+                FloatLayout:
+
+                    MDIconButton:
+                        id: volume_btn
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        icon: 'volume-high'
+
+                        on_release: app.off_volume()
+
+                    MDIconButton:
+                        pos_hint: {'right': 1, 'center_y': .5}
+                        icon: 'close'
+
+                        on_release: app.stop()
+
+        Label:
+            size_hint_y: .5
+            text_size: (250, None)
+            append_down: True
+            id: quests_label
+            text: 'Начните историю...'
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20,0,20,0
+
+            TextInput:
+                id: answers_data
+                hint_text: 'Введите ответ'
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20,5,20,0
+
+            TextInput:
+                id: quests_data
+                hint_text: 'Введите вопрос'
+        
+        FloatLayout:
+            MDFillRoundFlatButton:
+                pos_hint: {'center_x': .5, 'top': .9}
+                # icon: 'skip-next'
+                text: 'Передать ход'
+                size_hint_y: .3
+                on_release: root.add_data(answers_data.text, quests_data.text, quests_label.text)
+        
+        FloatLayout:
+            MDFillRoundFlatButton:
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                size_hint_x: .8
+                text: 'Закончить'
+                size_hint_y: .3
+                on_release: root.end()
+                on_release: root.manager.current = 'TheEndScreen'
+                on_release: root.add_data(answers_data.text, quests_data.text, quests_label.text)

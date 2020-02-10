@@ -1,0 +1,89 @@
+#:set color_shadow [0, 0, 0, .2980392156862745]
+
+
+<MyTextInput@MDTextFieldRound>
+
+    normal_color: color_shadow
+    active_color: color_shadow
+
+
+<Home>
+
+    player_1: player_1
+    player_2: player_2
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'media/AppBackground_2.jpg'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        canvas.before:
+            Color:
+                rgba: 0,0,0,.2
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        FloatLayout:
+            size_hint_y: .1
+
+            MDIconButton:
+                id: volume_btn
+                pos_hint: {'center_x': .75, 'center_y': .5}
+                icon: 'volume-high'
+
+                on_release: app.off_volume()
+
+            MDIconButton:
+                pos_hint: {'right': 1, 'center_y': .5}
+                icon: 'close'
+
+                on_release: app.stop()
+
+        BoxLayout:
+            size_hint_y: .3
+
+            Label:
+                font_size: '40sp'
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+                text: 'Чепуха'
+            
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            spacing: 20
+            
+            MyTextInput:
+                id: player_1
+                size_hint_x: .9
+                pos_hint: {'center_x': .5}
+                icon_left: 'face-recognition'
+                icon_right: ''
+                hint_text: 'Player 1'
+            
+            MyTextInput:
+                id: player_2
+                size_hint_x: .9
+                pos_hint: {'center_x': .5}
+                icon_left: 'face-recognition'
+                icon_right: ''
+                hint_text: 'Player 2'
+
+            BoxLayout:
+                size_hint_y: .2
+            
+            MDFillRoundFlatButton:
+                text: 'Старт'
+                size_hint: .9, .1
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: root.first_game_screen(player_1.text, player_2.text)
+                on_release: root.manager.current = 'NextGameScreen'
+            
+            BoxLayout:
+                size_hint_y: .2
