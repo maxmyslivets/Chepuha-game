@@ -1,6 +1,6 @@
-# Chepuha-game by Max Myslivets
+# Chepuha-game
 
-Android & iOS
+Android
 
 Онлайн-игра "Чепуха". Полностью свои вопросы и ответы.
 
