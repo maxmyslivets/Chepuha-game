@@ -57,12 +57,23 @@
 
                         on_release: app.stop()
 
-        Label:
-            size_hint_y: .5
-            text_size: (250, None)
-            append_down: True
-            id: quests_label
-            text: 'Начните историю...'
+        BoxLayout:
+            padding: 20,2,20,2
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                canvas.before:
+                    Color:
+                        rgba: 0,0,0,.5
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Label:
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: (self.size[0]*.8, None)
+                    id: quests_label
+                    text: 'Начните историю...'
 
         BoxLayout:
             orientation: 'vertical'

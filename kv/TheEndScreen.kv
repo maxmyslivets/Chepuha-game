@@ -41,8 +41,20 @@
 
         BoxLayout:
             padding: 20,20,20,20
-            TextInput:
-                id: end_label
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                canvas.before:
+                    Color:
+                        rgba: 0,0,0,.5
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Label:
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: (self.size[0]*.8, None)
+                    id: end_label
         
         BoxLayout:
             orientation: 'vertical'
