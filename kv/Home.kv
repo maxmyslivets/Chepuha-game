@@ -82,6 +82,7 @@
                 text: 'Старт'
                 size_hint: .9, .1
                 pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: app.press_btn()
                 on_release: root.first_game_screen(player_1.text, player_2.text)
                 on_release: root.manager.current = 'NextGameScreen'
             

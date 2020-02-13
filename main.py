@@ -13,6 +13,8 @@ sound = SoundLoader.load('media/wave.mp3')
 sound.loop = True
 sound.play()
 
+press_sound = SoundLoader.load('media/press.mp3')
+
 
 class Home(Screen):
 
@@ -58,8 +60,10 @@ class NextGameScreen(Screen):
 
 class TheEndScreen(Screen):
 
-    with open("kv/TheEndScreen.kv", encoding='utf8') as TheEndScreenKV:
-        Builder.load_string(TheEndScreenKV.read())
+    #with open("kv/TheEndScreen.kv", encoding='utf8') as TheEndScreenKV:
+    #    Builder.load_string(TheEndScreenKV.read())
+    
+    Builder.load_string("""#:include kv/TheEndScreen.kv""")
 
     end_label = ObjectProperty()
 
@@ -95,6 +99,10 @@ class ChepuhaApp(MDApp):
         self.answers.clear()
     
     volume_btn = ObjectProperty()
+
+    def press_btn(self):
+
+        press_sound.play()
     
     def off_volume(self):
 

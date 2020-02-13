@@ -86,6 +86,7 @@
                 # icon: 'skip-next'
                 text: 'Передать ход'
                 size_hint_y: .3
+                on_release: app.press_btn()
                 on_release: root.add_data(answers_data.text, quests_data.text, quests_label.text)
         
         FloatLayout:
@@ -94,6 +95,7 @@
                 size_hint_x: .8
                 text: 'Закончить'
                 size_hint_y: .3
+                on_release: app.press_btn()
                 on_release: root.end()
                 on_release: root.manager.current = 'TheEndScreen'
                 on_release: root.add_data(answers_data.text, quests_data.text, quests_label.text)

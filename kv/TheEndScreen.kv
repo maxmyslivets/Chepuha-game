@@ -52,11 +52,13 @@
                 MDFillRoundFlatButton:
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     text: 'Показать историю'
+                    on_release: app.press_btn()
                     on_release: root.update_answers()
             
             FloatLayout:
                 MDFillRoundFlatButton:
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     text: 'Сыграть ещё раз'
+                    on_release: app.press_btn()
                     on_release: app.clear_var()
                     on_release: root.manager.current = 'Home'
