@@ -4,14 +4,12 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
-
-
-Builder.load_string("""#:include test.kv""")
-
-
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.graphics import Line, Rectangle
 from kivy.uix.button import Button
+
+
+Builder.load_file("test.kv")
+
 
 class CustomLayout(RelativeLayout):
 
@@ -19,34 +17,35 @@ class CustomLayout(RelativeLayout):
         super(CustomLayout, self).__init__(**kwargs)
 
         btn = Button(text='ghjk')
-
         self.add_widget(btn)
 
 
 class Scroll(ScrollView):
+
+    layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
+    layout.bind(minimum_height=layout.setter('height'))
+
     def __init__(self, **kwargs):
         super(Scroll, self).__init__(**kwargs)
-        layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
-        layout.bind(minimum_height=layout.setter('height'))
-        # Make sure the height is such that there is something to scroll.
+
         for i in range(3):
             SkillStat = CustomLayout(pos=(0, 0), height=100, size_hint_y=None, size_hint_x=self.width)
-            layout.add_widget(SkillStat)
-
-        self.add_widget(layout)
+            self.layout.add_widget(SkillStat)
+        
+        self.add_widget(self.layout)
+    
+    def add(self):
+        self.layout.add_widget(CustomLayout(pos=(0, 0), height=100, size_hint_y=None, size_hint_x=self.width))
 
 
 class Home(Screen):
 
-    def add_btn(self):
-        Scroll().add_widget(Button(text='-=-=-=-=-=-=-=-'))
+    pass
 
 
 class MyApp(MDApp):
 
     def build(self):
-
-        self.theme_cls.theme_style = "Dark"
 
         sm = ScreenManager()
         sm.add_widget(Home(name='Home'))

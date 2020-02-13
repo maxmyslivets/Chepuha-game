@@ -1,21 +1,9 @@
-#:set color_shadow [0, 0, 0, .2980392156862745]
-
-<MyTextInput@MDTextFieldRound>
-
-    normal_color: color_shadow
-    active_color: color_shadow
-
 <Home>:
+    scr: scr
     BoxLayout:
         Button:
             text: 'add btn'
-            on_release: root.add_btn()
+            on_release: scr.add()
         Scroll:
-            #do_scroll_x: False
-            #do_scroll_y: True
+            id: scr
             size_hint:(1,1)
-            bar_width: 10
-            effect_cls: "ScrollEffect"
-            scroll_type: ['bars']
-            bar_color: [1, 0, 0, 1]     # red color
-            bar_inactive_color: [0, 0, 1, 1]    # blue color
