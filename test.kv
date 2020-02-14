@@ -1,9 +1,25 @@
+#:set color_shadow [0, 0, 0, .3]
+
+<My_MDTextFieldRound>
+
+    normal_color: color_shadow
+    active_color: color_shadow
+
 <Home>:
-    scr: scr
+
+    scroll_for_players: scroll_for_players
     BoxLayout:
-        Button:
-            text: 'add btn'
-            on_release: scr.add()
+        orientation: 'vertical'
+        padding: 10
+        spacing: 20
+        
         Scroll:
-            id: scr
-            size_hint:(1,1)
+            id: scroll_for_players
+            
+        BoxLayout:
+            size_hint_y: .2
+            MDFillRoundFlatButton:
+                text: 'add player'
+                size_hint_x: .8
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: scroll_for_players.add()

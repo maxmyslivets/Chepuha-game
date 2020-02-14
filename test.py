@@ -1,41 +1,90 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty
-from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.button import Button
+from kivymd.uix.textfield import MDTextFieldRound
 
 
-Builder.load_file("test.kv")
+Builder.load_string("""
+#:set color_shadow [0, 0, 0, .3]
+
+<My_MDTextFieldRound>
+    normal_color: color_shadow
+    active_color: color_shadow
+
+<Home>:
+
+    scroll_for_players: scroll_for_players
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 20
+
+        BoxLayout:
+            My_MDTextFieldRound:
+                text: '12345'
+                size_hint_x: .5
+        
+        Scroll:
+            id: scroll_for_players
+            
+        BoxLayout:
+            size_hint_y: .2
+            MDFillRoundFlatButton:
+                text: 'add player'
+                size_hint_x: .8
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: scroll_for_players.add()
+""")
 
 
-class CustomLayout(RelativeLayout):
-
-    def __init__(self, **kwargs):
-        super(CustomLayout, self).__init__(**kwargs)
-
-        btn = Button(text='ghjk')
-        self.add_widget(btn)
+class My_MDTextFieldRound(MDTextFieldRound):
+    
+    pass
 
 
 class Scroll(ScrollView):
 
-    layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
-    layout.bind(minimum_height=layout.setter('height'))
+    layoutForScroll = BoxLayout(
+        orientation='vertical',
+        spacing=10,
+        size_hint_y=None)
+
+    layoutForScroll.bind(minimum_height=layoutForScroll.setter('height'))
+
+    playerNumber = [1, 2]
+
 
     def __init__(self, **kwargs):
         super(Scroll, self).__init__(**kwargs)
 
-        for i in range(3):
-            SkillStat = CustomLayout(pos=(0, 0), height=100, size_hint_y=None, size_hint_x=self.width)
-            self.layout.add_widget(SkillStat)
+        for i in self.playerNumber:
+            textFieldForPlayer = My_MDTextFieldRound(
+            id = 'Player_'+str(i),
+            hint_text = 'Player '+str(i),
+            #pos_hint = {'center_x': .5},
+            icon_left = 'face-recognition',
+            icon_right = '')
+
+            self.layoutForScroll.add_widget(textFieldForPlayer)
         
-        self.add_widget(self.layout)
+        self.add_widget(self.layoutForScroll)
     
+
     def add(self):
-        self.layout.add_widget(CustomLayout(pos=(0, 0), height=100, size_hint_y=None, size_hint_x=self.width))
+
+        self.playerNumber.append(self.playerNumber[-1]+1)
+
+        textFieldForPlayer = My_MDTextFieldRound(
+            id = 'Player_'+str(self.playerNumber[-1]),
+            hint_text = 'Player '+str(self.playerNumber[-1]),
+            #pos_hint = {'center_x': .5},
+            icon_left = 'face-recognition',
+            icon_right = '')
+
+        self.layoutForScroll.add_widget(textFieldForPlayer)
+        print(self.playerNumber)
 
 
 class Home(Screen):
@@ -47,6 +96,9 @@ class MyApp(MDApp):
 
     def build(self):
 
+        self.theme_cls.primary_palette = "Yellow"
+        self.theme_cls.theme_style = "Dark"
+
         sm = ScreenManager()
         sm.add_widget(Home(name='Home'))
 
@@ -54,56 +106,3 @@ class MyApp(MDApp):
 
 
 MyApp().run()
-
-"""
-from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.graphics import Line, Rectangle
-from kivy.uix.carousel import Carousel
-from kivy.uix.scrollview import ScrollView
-from kivy.core.window import Window
-from kivy.lang import Builder
-
-
-class CustomLayout(RelativeLayout):
-
-    def __init__(self, **kwargs):
-        super(CustomLayout, self).__init__(**kwargs)
-        with self.canvas:
-            self.rect = Rectangle(pos=self.pos, size=(self.width, 90))
-        self.bind(pos=self.update_rect, size=self.update_rect)
-
-    def update_rect(self, *args):
-        self.rect.pos = self.pos
-        self.rect.size = self.size
-
-
-class Scroll(ScrollView):
-    def __init__(self, **kwargs):
-        super(Scroll, self).__init__(**kwargs)
-        layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
-        layout.bind(minimum_height=layout.setter('height'))
-        # Make sure the height is such that there is something to scroll.
-        for i in range(100):
-            SkillStat = CustomLayout(pos=(0, 0), height=100, size_hint_y=None, size_hint_x=self.width)
-            layout.add_widget(SkillStat)
-
-        self.add_widget(layout)
-
-
-class Sheet(Carousel):
-    pass
-
-
-Builder.load_file('test.kv')
-
-
-class SheetApp(App):
-    def build(self):
-        return Sheet()
-
-
-if __name__ == '__main__':
-    SheetApp().run()
-"""

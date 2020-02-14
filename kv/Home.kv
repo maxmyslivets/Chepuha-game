@@ -1,16 +1,19 @@
-#:set color_shadow [0, 0, 0, .2980392156862745]
+#:set color_shadow [0, 0, 0, .3]
 
 
-<MyTextInput@MDTextFieldRound>
+<My_MDTextFieldRound>
 
     normal_color: color_shadow
     active_color: color_shadow
 
 
+<CustomLayoutForScrollWithPlayers>:
+
+
+
 <Home>
 
-    player_1: player_1
-    player_2: player_2
+    scroll_for_players: scroll_for_players
 
     canvas.before:
         Rectangle:
@@ -59,32 +62,22 @@
             padding: 10
             spacing: 20
             
-            MyTextInput:
-                id: player_1
-                size_hint_x: .9
-                pos_hint: {'center_x': .5}
-                icon_left: 'face-recognition'
-                icon_right: ''
-                hint_text: 'Player 1'
-            
-            MyTextInput:
-                id: player_2
-                size_hint_x: .9
-                pos_hint: {'center_x': .5}
-                icon_left: 'face-recognition'
-                icon_right: ''
-                hint_text: 'Player 2'
+            Scroll:
+                id: scroll_for_players
 
-            BoxLayout:
-                size_hint_y: .2
+            MDFillRoundFlatButton:
+                text: 'Добавить игрока'
+                size_hint: .9, .2
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: scroll_for_players.add()
             
             MDFillRoundFlatButton:
                 text: 'Старт'
-                size_hint: .9, .1
+                size_hint: .9, .2
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 on_release: app.press_btn()
-                on_release: root.first_game_screen(player_1.text, player_2.text)
+                #on_release: root.first_game_screen()
                 on_release: root.manager.current = 'NextGameScreen'
             
             BoxLayout:
-                size_hint_y: .2
+                size_hint_y: .1
