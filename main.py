@@ -6,6 +6,8 @@ from kivy.core.audio import SoundLoader
 from kivy.uix.scrollview import ScrollView
 from kivymd.uix.textfield import MDTextFieldRound
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivymd.uix.button import MDIconButton
 
 
 from kivy.core.window import Window
@@ -34,9 +36,28 @@ class Home(Screen):
         NextGameScreen().start_quests_label()"""
 
 
-class My_MDTextFieldRound(MDTextFieldRound):
+class CastomMDTextFieldRound(MDTextFieldRound):
+
+    icon_right = ''
+    icon_left = 'face-recognition'
+    #pos_hint = {'center_x': .5}
+
+    def __init__(self, **kwargs):
+        super(CastomMDTextFieldRound, self).__init__(**kwargs)
+
+        btn = MDIconButton(
+            icon='delete', 
+            pos_hint={'right': 1})
+        # FIXME: Нужно обратиться к функции другого класса
+        btn.bind(on_press= lambda x:self.removeTextField('self.id'))
+
+        layout = FloatLayout()
+        layout.add_widget(btn)
+
+        self.add_widget(layout)
     
-    pass
+    def removeTextField(self, sas):
+        print(sas)
 
 
 # FIXME: Ширина TextField не подгоняется под ширину родителя
@@ -57,15 +78,9 @@ class Scroll(ScrollView):
         super(Scroll, self).__init__(**kwargs)
 
         for i in self.playerNumber:
-            textFieldForPlayer = My_MDTextFieldRound(
+            textFieldForPlayer = CastomMDTextFieldRound(
             id = 'Player_'+str(i),
-            hint_text = 'Player '+str(i),
-            #pos_hint = {'center_x': .5},
-            icon_left = 'face-recognition',
-            icon_right = 'delete')
-            #on_release = Scroll().removeTextField('self.id'))
-            
-            # FIXME: не тот способ присвоить действие нажатию
+            hint_text = 'Player '+str(i))
 
             self.layoutForScroll.add_widget(textFieldForPlayer)
         
@@ -76,12 +91,9 @@ class Scroll(ScrollView):
 
         self.playerNumber.append(self.playerNumber[-1]+1)
 
-        textFieldForPlayer = My_MDTextFieldRound(
+        textFieldForPlayer = CastomMDTextFieldRound(
             id = 'Player_'+str(self.playerNumber[-1]),
-            hint_text = 'Player '+str(self.playerNumber[-1]),
-            #pos_hint = {'center_x': .5},
-            icon_left = 'face-recognition',
-            icon_right = 'delete')
+            hint_text = 'Player '+str(self.playerNumber[-1]))
 
         self.layoutForScroll.add_widget(textFieldForPlayer)
         print(self.playerNumber)
