@@ -5,10 +5,7 @@
 
     normal_color: color_shadow
     active_color: color_shadow
-
-
-<CustomLayoutForScrollWithPlayers>:
-
+    normal_color: [1, 1, 1, .05]
 
 
 <Home>
@@ -69,7 +66,7 @@
                 text: 'Добавить игрока'
                 size_hint: .9, .2
                 pos_hint: {'center_x': .5, 'center_y': .5}
-                on_release: scroll_for_players.add()
+                on_release: scroll_for_players.addTextFieldForNewPlayer()
             
             MDFillRoundFlatButton:
                 text: 'Старт'

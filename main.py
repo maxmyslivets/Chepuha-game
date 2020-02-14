@@ -53,7 +53,6 @@ class Scroll(ScrollView):
 
     playerNumber = [1, 2]
 
-
     def __init__(self, **kwargs):
         super(Scroll, self).__init__(**kwargs)
 
@@ -63,14 +62,17 @@ class Scroll(ScrollView):
             hint_text = 'Player '+str(i),
             #pos_hint = {'center_x': .5},
             icon_left = 'face-recognition',
-            icon_right = '')
+            icon_right = 'delete')
+            #on_release = Scroll().removeTextField('self.id'))
+            
+            # FIXME: не тот способ присвоить действие нажатию
 
             self.layoutForScroll.add_widget(textFieldForPlayer)
         
         self.add_widget(self.layoutForScroll)
     
 
-    def add(self):
+    def addTextFieldForNewPlayer(self):
 
         self.playerNumber.append(self.playerNumber[-1]+1)
 
@@ -79,10 +81,18 @@ class Scroll(ScrollView):
             hint_text = 'Player '+str(self.playerNumber[-1]),
             #pos_hint = {'center_x': .5},
             icon_left = 'face-recognition',
-            icon_right = '')
+            icon_right = 'delete')
 
         self.layoutForScroll.add_widget(textFieldForPlayer)
         print(self.playerNumber)
+    
+    def removeTextField(self, widgetTextField):
+
+        # FIXME: Как обратиться к полю ввода имени определенного игрока по его id и удалить его ??
+
+        print(widgetTextField)
+        #widgetTextField = ObjectProperty()
+        #self.layoutForScroll.remove_widget(widgetTextField)
 
 
 
