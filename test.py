@@ -5,10 +5,12 @@ from kivymd.uix.textfield import MDTextFieldRound
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.button import MDIconButton
+from kivy.uix.button import Button
 
 class CastomMDTextFieldRound(MDTextFieldRound):
 
     icon_right = ''
+    size_hint = (.5, None)
 
     def __init__(self, **kwargs):
         super(CastomMDTextFieldRound, self).__init__(**kwargs)
@@ -16,9 +18,12 @@ class CastomMDTextFieldRound(MDTextFieldRound):
         btn = MDIconButton(
             icon='delete', 
             pos_hint={'right': 1})
-        btn.bind(on_press= lambda x:Home().func())
+            
+        btn.bind(on_release = lambda x: Home().func())
 
-        layout = FloatLayout()
+        
+
+        layout = FloatLayout(size_hint=(1,1))
         layout.add_widget(btn)
 
         self.add_widget(layout)
@@ -29,7 +34,9 @@ class Home(BoxLayout):
     def __init__(self, **kwargs):
         super(Home, self).__init__(**kwargs)
 
-        self.add_widget(CastomMDTextFieldRound())
+        layoutbox = FloatLayout()
+        layoutbox.add_widget(MDTextFieldRound(pos_hint={'center_x': .5, 'center_y': .5}, size_hint=(.5, None)))
+        self.add_widget(layoutbox)
     
     def func(self):
         print('test -- ok!')

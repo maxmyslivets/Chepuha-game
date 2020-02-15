@@ -10,17 +10,17 @@ from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.button import MDIconButton
 
 
-from kivy.core.window import Window
-Window.size = (300, 500)
+#from kivy.core.window import Window
+#Window.size = (300, 500)
 
 
 # FIXME: После сборки в .apk, возникает ошибка при попытке обращения к объекту аудиозаписи
 
-sound = SoundLoader.load('media/wave.mp3')
-sound.loop = True
+#sound = SoundLoader.load('media/wave.mp3')
+#sound.loop = True
 #sound.play()
 
-press_sound = SoundLoader.load('media/press.mp3')
+#press_sound = SoundLoader.load('media/press.mp3')
 
 
 class Home(Screen):
@@ -49,21 +49,28 @@ class CastomMDTextFieldRound(MDTextFieldRound):
             icon='delete', 
             pos_hint={'right': 1})
         # FIXME: Нужно обратиться к функции другого класса
-        btn.bind(on_press= lambda x:self.removeTextField('self.id'))
+        btn.bind(on_release = lambda x: self.removeTextField(self.id))
+        #btn.bind(on_release = lambda x: Scroll().test())
 
         layout = FloatLayout()
         layout.add_widget(btn)
 
         self.add_widget(layout)
     
-    def removeTextField(self, sas):
-        print(sas)
+    def removeTextField(self, widgetTextField):
+
+        print(widgetTextField)
+        #widgetTextField = ObjectProperty()
+        #Scroll().layoutForScroll.remove_widget(widgetTextField)
 
 
 # FIXME: Ширина TextField не подгоняется под ширину родителя
 
 
 class Scroll(ScrollView):
+
+    def test(self):
+        print('-----test-------test------test------')
 
     layoutForScroll = BoxLayout(
         orientation='vertical',
@@ -103,8 +110,8 @@ class Scroll(ScrollView):
         # FIXME: Как обратиться к полю ввода имени определенного игрока по его id и удалить его ??
 
         print(widgetTextField)
-        #widgetTextField = ObjectProperty()
-        #self.layoutForScroll.remove_widget(widgetTextField)
+        widgetTextField = ObjectProperty()
+        self.layoutForScroll.remove_widget(widgetTextField)
 
 
 
@@ -179,15 +186,15 @@ class ChepuhaApp(MDApp):
     volume_btn = ObjectProperty()
 
     def press_btn(self):
-
+        pass
         # FIXME: При нажатии на любую кнопку должен появлятся звук нажатия, но он проигрывается только один раз.
         # При повторном нажатии звук не воспроизводится и ошибок приложения при этом не возникает.
-        press_sound.play()
+        #press_sound.play()
     
     def off_volume(self):
-
-        if sound.volume: sound.volume = 0
-        else: sound.volume = 1
+        pass
+        #if sound.volume: sound.volume = 0
+        #else: sound.volume = 1
 
         # FIXME: Не обновляется иконка громкости после нажатия на кнопку
         # self.volume_btn.icon = 'volume-high'
